@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+}
+
+.keys {
+    background-image: url('./concierto.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    
+}
+
+.key {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000a1;
+    border: 2px solid black;
+    padding: 10px;
+    width: 100px;
+    height: 100px;
+    transition: all .07s;
+}
+
+kbd {
+    font-size: 40px;
+    color: white;
+}
+
+.audio {
+    color: gold;
+}
+
+.playing {
+    transform: scale(1.1);
+    border: 3px solid yellow;
+    box-shadow: 0 0 10px #caca04;
+}
+

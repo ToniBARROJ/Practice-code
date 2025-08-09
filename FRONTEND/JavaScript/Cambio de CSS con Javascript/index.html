@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambio de CSS con Javascript</title>
+    <style>
+        * {
+            background-color: black;
+            color: white;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #javascript {
+            color: var(--base);
+            font-weight: bold;
+        }
+
+        :root {
+            --base: #ffcc67;
+            --spacing: 0px;
+            --blur: 0px;
+        }
+
+        img {
+            padding: var(--spacing);
+            background: var(--base);
+            filter: blur(var(--blur));
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            gap: 1.5rem;
+            height: 99vh;
+            border: 3px solid white;
+        }
+
+        .second-container {
+            display: flex;
+            flex-direction: column;
+            margin-top: 50px;
+            gap: 20px;
+
+            h1 {
+                font-size: 3rem;
+            }
+        }
+
+        .input-container {
+            display: flex;
+            justify-content: space-evenly;
+            font-size: 20px;
+
+            .input {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 0.5rem;
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="second-container">
+            <h1>Cambio de CSS con <span id="javascript">Javascript</span></h1>
+            <div class="input-container">
+                <div class="input">
+                    <label for="spacing">Spacing</label>
+                    <input type="range" class="range" name="spacing" min="0" max="200" value="0" data-spacing="px">
+                </div>
+                <div class="input">
+                    <label for="spacing">Blur</label>
+                    <input type="range" class="range" name="blur" min="0" max="50" value="0" data-blur="px">
+                </div>
+                <div class="input">
+                    <label for="base">Base</label>
+                    <input type="color" name="base" value="#ffcc67">
+                </div>
+            </div>
+        </div>
+
+        <img src="./camping-7856198_640.jpg" alt="imagen" class="img">
+    </div>
+
+    <script>
+        const inputs = document.querySelectorAll('.input input');
+
+        function handleUpdate() {
+            const suffix = this.dataset.spacing || this.dataset.blur || '';
+            document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+        }
+
+        inputs.forEach(input => input.addEventListener('change', handleUpdate));
+        inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+    </script>
+</body>
+
+</html>

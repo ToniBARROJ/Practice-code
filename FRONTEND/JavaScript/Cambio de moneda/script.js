@@ -29,6 +29,13 @@ const currencies = [
   { code: 'ZAR', name: 'South African Rand' },
 ];
 
+const errorMessages = {
+  invalidQuantity: 'Please enter a valid quantity greater than zero.',
+  sameCurrency: 'Current currency and wanted currency must be different.',
+  apiError:
+    'There was an error fetching the exchange rate. Please try again later.',
+};
+
 let quantityInput = document.getElementById('quantity');
 let currentCurrency = document.getElementById('currentCurrency');
 let wantedCurrency = document.getElementById('wantedCurrency');
@@ -52,49 +59,27 @@ function inputValidation() {
   ) {
     return false;
   }
-
   return true;
 }
 
-function makeURL() {
-  const validation = inputValidation();
-
-  if (validation) {
-    let currencyQuantity = encodeURIComponent(
-      document.getElementById('quantity').value
-    );
-    let wantedCurrencyURI = encodeURIComponent(
-      document.getElementById('wantedCurrency').value
-    );
-    let currentCurrencyURI = encodeURIComponent(
-      document.getElementById('currentCurrency').value
-    );
-
-    let url = `https://api.exchangerate.host/convert?access_key=72e845380d2cfb60ccc3ea6e9302a292&from=${currentCurrencyURI}&to=${wantedCurrencyURI}&amount=${currencyQuantity}`;
-    console.log(url);
-    return url;
-  } else {
-    return null;
-  }
+function makeURL(amount, from, to) {
+  let url = `https://api.exchangerate.host/convert?access_key=72e845380d2cfb60ccc3ea6e9302a292&from=${from}&to=${to}&amount=${amount}`;
+  console.log(url);
+  return url;
 }
 
-async function getData() {
+async function getData(amount, from, to) {
   try {
-    const url = makeURL();
+    const url = makeURL(amount, from, to);
 
-    if (url) {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
-      const result = await response.json();
-
-      console.log(result.query, result.result);
-      return result.result;
-    } else {
-      console.log('Se deben cumplir los campos');
-      return false;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
     }
+
+    const result = await response.json();
+    console.log(result.query, result.result);
+    return result.result;
   } catch (error) {
     console.error(error.message);
     console.log('Error en la funcion getData');
@@ -103,7 +88,16 @@ async function getData() {
 }
 
 changeButton.addEventListener('click', async () => {
-  const result = await getData();
+  if (!inputValidation()) {
+    resultText.innerHTML = 'Porfavor, revisa los datos introducidos';
+    return;
+  }
+
+  const from = currentCurrency.value;
+  const to = wantedCurrency.value;
+  const amount = quantityInput.value;
+
+  const result = await getData(amount, from, to);
 
   if (result === null) {
     resultText.innerHTML = 'Algo no ha ido bien';

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cambio de moneda</title>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="contenedor">
+      <div id="mainText">
+        <h1>Money exchange</h1>
+      </div>
+      <div id="">
+        <label for="quantity">Quantity</label>
+        <input type="number" name="quantity" id="quantity" /><br />
+        <label for="currentCurrency">Current Currency</label>
+        <select name="currentCurrency" id="currentCurrency"></select
+        ><br />
+
+        <!-- Selección de moneda deseada -->
+        <label for="wantedCurrency">Wanted Currency</label>
+        <select name="wantedCurrency" id="wantedCurrency"></select
+        ><br /><br />
+        <button type="button" id="changeCurrency">Change currency</button>
+      </div>
+      <div id="result"></div>
+    </div>
+  </body>
+</html>

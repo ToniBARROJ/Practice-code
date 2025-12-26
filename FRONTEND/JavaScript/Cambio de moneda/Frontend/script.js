@@ -64,7 +64,6 @@ function inputValidation() {
 
 function makeURL(amount, from, to) {
   let url = `/convert?from=${from}&to=${to}&amount=${amount}`;
-  console.log(url);
   return url;
 }
 

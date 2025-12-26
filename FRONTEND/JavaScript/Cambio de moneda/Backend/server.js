@@ -1,26 +1,42 @@
 const express = require('express');
+const path = require('path');
+const { getConversion } = require('./api');
 const app = express();
 const PORT = 3000;
 
-// Middleware to parse JSON bodies
-app.use(express.json());
+app.use(express.static(path.join(__dirname, '../Frontend')));
 
-// Main endpoint
 app.get('/', (req, res) => {
-  res.json({ status: 'ok' });
+  res.sendFile(path.join(__dirname, '../Frontend/index.html'));
 });
 
 // Currency conversion endpoint
-app.get('/convert', (req, res) => {
+app.get('/convert', async (req, res) => {
   const { from, to, amount } = req.query;
+
   if (!from || !to || !amount) {
-    return res.status(400).json({ error: 'Missing parameters' });
+    return res.status(400).json({
+      success: false,
+      result: 'Parámetros inválidos',
+    });
   }
-  res.json({ from, to, amount, result: amount * 0.9 });
+  try {
+    const result = await getConversion(from, to, amount);
+
+    res.json({
+      success: true,
+      result: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      result: 'Error al obtener la conversión',
+    });
+  }
 });
 
-app.listen(PORT, '127.0.0.1', () => {
-  console.log(`Server is running on 127.0.0.1:${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 setInterval(() => {

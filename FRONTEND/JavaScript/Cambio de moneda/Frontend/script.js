@@ -62,14 +62,14 @@ function inputValidation() {
   return true;
 }
 
-function makeURL(amount, from, to) {
+function makeURL(from, to, amount) {
   let url = `/convert?from=${from}&to=${to}&amount=${amount}`;
   return url;
 }
 
-async function getData(amount, from, to) {
+async function getData(from, to, amount) {
   try {
-    const url = makeURL(amount, from, to);
+    const url = makeURL(from, to, amount);
 
     const response = await fetch(url);
     if (!response.ok) {

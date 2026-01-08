@@ -2,7 +2,7 @@ const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 async function getConversion(from, to, amount) {
-  const url = `https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`;
+  const url = `https://api.massive.com/v1/conversion/${from}/${to}?amount=${amount}&precision=2&apiKey=6P6Twlq87yQAfpL4SDC80kcK3s7VNP0z`;
 
   const response = await fetch(url);
 

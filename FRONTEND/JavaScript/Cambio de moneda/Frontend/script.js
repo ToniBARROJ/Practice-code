@@ -63,7 +63,7 @@ function inputValidation() {
 }
 
 function makeURL(from, to, amount) {
-  let url = `/convert?from=${from}&to=${to}&amount=${amount}`;
+  let url = `/conversion/${from}/${to}?amount=${amount}&precision=2&apiKey=6P6Twlq87yQAfpL4SDC80kcK3s7VNP0z`;
   return url;
 }
 

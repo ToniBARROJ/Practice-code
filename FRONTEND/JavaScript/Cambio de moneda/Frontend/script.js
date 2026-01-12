@@ -63,17 +63,17 @@ function inputValidation() {
 }
 
 function makeURL(from, to, amount) {
-  let url = `/conversion/${from}/${to}?amount=${amount}&precision=2&apiKey=6P6Twlq87yQAfpL4SDC80kcK3s7VNP0z`;
+  let url = `/pair?from=${from}&to=${to}&amount=${amount}`;
   return url;
 }
 
 async function getData(from, to, amount) {
   try {
     const url = makeURL(from, to, amount);
-
     const response = await fetch(url);
+
     if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+      throw new Error(`HTTP Error: ${response.status}`);
     }
 
     const data = await response.json();
@@ -84,7 +84,7 @@ async function getData(from, to, amount) {
 
     return data.result;
   } catch (error) {
-    console.error(error.message);
+    console.error('getData error:', error.message);
     return null;
   }
 }
@@ -99,7 +99,7 @@ changeButton.addEventListener('click', async () => {
   const to = wantedCurrency.value;
   const amount = quantityInput.value;
 
-  const result = await getData(amount, from, to);
+  const result = await getData(from, to, amount);
 
   if (result === null) {
     resultText.innerHTML = 'Algo no ha ido bien';

@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 });
 
 // Petición GET a la ruta "/convert" que extrae los datos del frontend para después llamar a la función getConversion que hace el fetch a la API externa y devuelve un resultado.
-app.get('/convert', async (req, res) => {
+app.get('/pair', async (req, res) => {
   const { from, to, amount } = req.query;
 
   if (!from || !to || !amount) {
@@ -39,9 +39,10 @@ app.get('/convert', async (req, res) => {
       result: result,
     });
   } catch (error) {
+    console.log('Backend Error:', error.message);
     res.status(500).json({
       success: false,
-      result: 'Error al obtener la conversión',
+      message: error.message,
     });
   }
 });
